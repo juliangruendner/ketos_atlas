@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+
+  broadsea-methods-library:
+    image: ohdsi/broadsea-methodslibrary
+    ports:
+      - "8787:8787"
+      - "6311:6311"
+
+  broadsea-webtools:
+    image: ohdsi/broadsea-webtools
+    ports:
+      - "8080:8080"
+    volumes:
+     - .:/tmp/drivers/:ro
+     - ./config-local.js:/usr/local/tomcat/webapps/atlas/js/config-local.js:ro
+    environment:
+      - WEBAPI_URL=http://mlserviceatlas_broadsea-webtools_1:8080
+      - datasource_driverClassName=org.postgresql.Driver
+      - datasource_url=jdbc:postgresql://omop_on_fhir/omopDb
+      - datasource_username=omopDbUser
+      - datasource_password=omopDbPw
+      - spring.jpa.properties.hibernate.default_schema=ohdsi
+      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+      - spring.batch.repository.tableprefix=ohdsi.BATCH_
+      - flyway_datasource_driverClassName=org.postgresql.Driver
+      - flyway_datasource_url=jdbc:postgresql://omop_on_fhir:5432/omopDb
+      - flyway_schemas=ohdsi
+      - flyway.placeholders.ohdsiSchema=ohdsi
+      - flyway_datasource_username=omopDbUser
+      - flyway_datasource_password=omopDbPw
+      - flyway.locations=classpath:db/migration/postgresql
+    networks:
+      - fhiromop
+
+networks:
+    fhiromop:
+      external:
+        name: fhiromop
