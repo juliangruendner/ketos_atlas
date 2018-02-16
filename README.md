@@ -1,0 +1,1 @@
+Don't forget to execute those commands: http://www.ohdsi.org/web/wiki/doku.php?id=documentation:software:webapi:postgresql_installation_guide

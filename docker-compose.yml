@@ -11,14 +11,14 @@ services:
   broadsea-webtools:
     image: ohdsi/broadsea-webtools
     ports:
-      - "8080:8080"
+      - "8081:8080"
     volumes:
      - .:/tmp/drivers/:ro
      - ./config-local.js:/usr/local/tomcat/webapps/atlas/js/config-local.js:ro
     environment:
-      - WEBAPI_URL=http://mlserviceatlas_broadsea-webtools_1:8080
+      - WEBAPI_URL=http://localhost:8081
       - datasource_driverClassName=org.postgresql.Driver
-      - datasource_url=jdbc:postgresql://omop_on_fhir/omopDb
+      - datasource_url=jdbc:postgresql://omop_on_fhir:5432/omopDb
       - datasource_username=omopDbUser
       - datasource_password=omopDbPw
       - spring.jpa.properties.hibernate.default_schema=ohdsi

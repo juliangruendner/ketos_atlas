@@ -3,9 +3,9 @@ truncate source;
 truncate source_daimon;
 
 -- OHDSI CDM source
-INSERT INTO public.source( source_id, source_name, source_key, source_connection, source_dialect)
+INSERT INTO source( source_id, source_name, source_key, source_connection, source_dialect)
 VALUES (1, 'OHDSI CDM V5 Database', 'OHDSI-CDMV5',
-  'jdbc:postgresql://omop_on_fhir:5432/omopDb?user=omopDbUser&password=omopDbPw', 'postgresql');
+  'jdbc:postgresql://omop_on_fhir:5432/omopDb?user=omopDbUser&password=omopDbPw&currentSchema=public', 'postgresql');
 
 -- CDM daimon
 INSERT INTO source_daimon( source_daimon_id, source_id, daimon_type, table_qualifier, priority) VALUES (1, 1, 0, 'public', 2);
